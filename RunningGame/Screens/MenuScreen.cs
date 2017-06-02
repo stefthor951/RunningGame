@@ -13,12 +13,21 @@ namespace RunningGame.Screens
     public partial class MenuScreen : UserControl
     {
         int index = 0;
-        int lastIndex = 0;
-        bool leftKeyDown, rightKeyDown;
+        bool leftKeyDown, rightKeyDown, choiceChanged = false;
+        Graphics g;
+        Pen whitePen;
 
         public MenuScreen()
         {
             InitializeComponent();
+            g = this.CreateGraphics();
+            whitePen = new Pen(Color.White, 5);
+            
+        }
+
+        private void MenuScreen_Load(object sender, EventArgs e)
+        {
+            g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
         }
 
         private void MenuScreen_KeyUp(object sender, KeyEventArgs e)
@@ -27,19 +36,18 @@ namespace RunningGame.Screens
             {
                 case Keys.Left:
                     leftKeyDown = false;
+                    choiceChanged = false;
                     break;
                 case Keys.Right:
                     rightKeyDown = false;
+                    choiceChanged = false;
                     break;
             }
         }
 
         private void MenuScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            lastIndex = index;
             Form form = this.FindForm();
-            Graphics g = this.CreateGraphics();
-            Pen whitePen = new Pen(Color.White, 5);
             //to make sure that if you click to the bottom or top you will go to the other end instead of just stopping
             switch (e.KeyCode)
             {
@@ -76,7 +84,7 @@ namespace RunningGame.Screens
                 case Keys.Space:
                     switch (index)
                     {
-                        //start button
+                        //If the start button is selected
                         case 0:
 
                             GameScreen gs = new GameScreen();
@@ -87,7 +95,7 @@ namespace RunningGame.Screens
 
                             break;
 
-                        //highscore button
+                        //If the instruction button is selected
                         case 1:
 
                             InstructionScreen ins = new InstructionScreen();
@@ -99,7 +107,7 @@ namespace RunningGame.Screens
                             break;
                             
 
-                        //option button
+                        //If the highscore button is selected
                         case 2:
 
                             HighscoreScreen hs = new HighscoreScreen();
@@ -110,7 +118,7 @@ namespace RunningGame.Screens
 
                             break;
 
-                        //exit button
+                        //If the exit button is selected
                         case 3:
 
                             Application.Exit();
@@ -119,41 +127,40 @@ namespace RunningGame.Screens
                     break;
             }
 
-            //set button to white if not clicked on
-            switch (lastIndex)
-            {
-                case 0:
-                    startLabel.ForeColor = Color.White;
-                    break;
-                case 1:
-                    instructionLabel.ForeColor = Color.White;
-                    break;
-                case 2:
-                    highscoreLabel.ForeColor = Color.White;
-                    break;
-                case 3:
-                    exitLabel.ForeColor = Color.White;
-                    break;
-            }
-
             //set selected button to red
             switch (index)
             {
                 case 0:
-                    g.Clear(Color.Transparent);
-                    g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width, startLabel.Location.Y + startLabel.Size.Height);
+                    if (choiceChanged == false)
+                    {
+                        choiceChanged = true;
+                        g.Clear(Color.Maroon);
+                        g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
+                    }
                     break;
                 case 1:
-                    g.Clear(Color.Transparent);
-                    g.DrawLine(whitePen, instructionLabel.Location.X, instructionLabel.Location.Y + instructionLabel.Size.Height, instructionLabel.Location.X + instructionLabel.Size.Width, instructionLabel.Location.Y + instructionLabel.Size.Height);
+                    if (choiceChanged == false)
+                    {
+                        choiceChanged = true;
+                        g.Clear(Color.Maroon);
+                        g.DrawLine(whitePen, instructionLabel.Location.X, instructionLabel.Location.Y + instructionLabel.Size.Height, instructionLabel.Location.X + instructionLabel.Size.Width, instructionLabel.Location.Y + instructionLabel.Size.Height);
+                    }
                     break;
                 case 2:
-                    g.Clear(Color.Transparent);
-                    g.DrawLine(whitePen, highscoreLabel.Location.X, highscoreLabel.Location.Y + highscoreLabel.Size.Height, highscoreLabel.Location.X + highscoreLabel.Size.Width, highscoreLabel.Location.Y + highscoreLabel.Size.Height);
+                    if (choiceChanged == false)
+                    {
+                        choiceChanged = true;
+                        g.Clear(Color.Maroon);
+                        g.DrawLine(whitePen, highscoreLabel.Location.X, highscoreLabel.Location.Y + highscoreLabel.Size.Height, highscoreLabel.Location.X + highscoreLabel.Size.Width, highscoreLabel.Location.Y + highscoreLabel.Size.Height);
+                    }
                     break;
                 case 3:
-                    g.Clear(Color.Transparent);
-                    g.DrawLine(whitePen, exitLabel.Location.X, exitLabel.Location.Y + exitLabel.Size.Height, exitLabel.Location.X + exitLabel.Size.Width, exitLabel.Location.Y + exitLabel.Size.Height);
+                    if (choiceChanged == false)
+                    {
+                        choiceChanged = true;
+                        g.Clear(Color.Maroon);
+                        g.DrawLine(whitePen, exitLabel.Location.X, exitLabel.Location.Y + exitLabel.Size.Height, exitLabel.Location.X + exitLabel.Size.Width - 5, exitLabel.Location.Y + exitLabel.Size.Height);
+                    }
                     break;
             }
         }

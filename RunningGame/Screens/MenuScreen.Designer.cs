@@ -36,45 +36,41 @@
             // 
             // startLabel
             // 
-            this.startLabel.AutoSize = true;
             this.startLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startLabel.ForeColor = System.Drawing.Color.White;
-            this.startLabel.Location = new System.Drawing.Point(70, 323);
+            this.startLabel.Location = new System.Drawing.Point(78, 323);
             this.startLabel.Name = "startLabel";
-            this.startLabel.Size = new System.Drawing.Size(126, 40);
+            this.startLabel.Size = new System.Drawing.Size(126, 36);
             this.startLabel.TabIndex = 0;
             this.startLabel.Text = "START";
             // 
             // instructionLabel
             // 
-            this.instructionLabel.AutoSize = true;
             this.instructionLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.instructionLabel.ForeColor = System.Drawing.Color.White;
-            this.instructionLabel.Location = new System.Drawing.Point(257, 323);
+            this.instructionLabel.Location = new System.Drawing.Point(260, 323);
             this.instructionLabel.Name = "instructionLabel";
-            this.instructionLabel.Size = new System.Drawing.Size(209, 40);
+            this.instructionLabel.Size = new System.Drawing.Size(209, 35);
             this.instructionLabel.TabIndex = 1;
             this.instructionLabel.Text = "CONTROLS";
             // 
             // highscoreLabel
             // 
-            this.highscoreLabel.AutoSize = true;
             this.highscoreLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.highscoreLabel.ForeColor = System.Drawing.Color.White;
-            this.highscoreLabel.Location = new System.Drawing.Point(527, 323);
+            this.highscoreLabel.Location = new System.Drawing.Point(525, 322);
             this.highscoreLabel.Name = "highscoreLabel";
-            this.highscoreLabel.Size = new System.Drawing.Size(249, 40);
+            this.highscoreLabel.Size = new System.Drawing.Size(249, 36);
             this.highscoreLabel.TabIndex = 2;
             this.highscoreLabel.Text = "HIGHSCORES";
             // 
             // exitLabel
             // 
-            this.exitLabel.AutoSize = true;
             this.exitLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitLabel.ForeColor = System.Drawing.Color.White;
-            this.exitLabel.Location = new System.Drawing.Point(837, 323);
+            this.exitLabel.Location = new System.Drawing.Point(830, 323);
             this.exitLabel.Name = "exitLabel";
-            this.exitLabel.Size = new System.Drawing.Size(93, 40);
+            this.exitLabel.Size = new System.Drawing.Size(93, 35);
             this.exitLabel.TabIndex = 3;
             this.exitLabel.Text = "EXIT";
             // 
@@ -89,10 +85,10 @@
             this.Controls.Add(this.startLabel);
             this.Name = "MenuScreen";
             this.Size = new System.Drawing.Size(1000, 400);
+            this.Load += new System.EventHandler(this.MenuScreen_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MenuScreen_KeyUp);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MenuScreen_PreviewKeyDown);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
