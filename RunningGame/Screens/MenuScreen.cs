@@ -27,7 +27,7 @@ namespace RunningGame.Screens
 
         private void MenuScreen_Load(object sender, EventArgs e)
         {
-            g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
+            //g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
         }
 
         private void MenuScreen_KeyUp(object sender, KeyEventArgs e)
