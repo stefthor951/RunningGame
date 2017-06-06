@@ -3,31 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RunningGame.Screens;
 
 namespace RunningGame.Classes
 {
     class Player
     {
-        public double x, y, initialY, xSpeed, ySpeed;
+        public double x, y, initialY;
         public int counter;
+        int yChange, yVelocity, forwardSpeed = 5, reverseSpeed = 3;
 
-        public Player(float _x, float _y, float _xSlope, float _ySlope)
+        public Player(float _x, float _y)
         {
             x = _x;
             y = _y;
-            xSpeed = _xSlope;
-            ySpeed = _ySlope;
         }
 
-        public void jump()
+        public void airCheck()
         {
-            if (counter == 0)
+            if (GameScreen.inAir == true)
             {
-                initialY = y;
-            }
+                if (counter == 0)
+                {
+                    initialY = y;
+                }
+                y = initialY + yChange;
+                yChange += yVelocity;
+                yVelocity += GameScreen.yAcceleration;
+                GameScreen.yAcceleration--;
 
-            y = Math.Sqrt(((counter)^2)+5*(counter)) + initialY;
-            counter++;
+                counter++;
+            }
+            else
+            {
+                counter = 0;
+            }
+        }
+
+        void Move(string direction)
+        {
+            if (direction == "left")
+            {
+                x -= reverseSpeed;
+            }
+            if (direction == "right")
+            {
+                x += forwardSpeed;
+            }
         }
     }
 }

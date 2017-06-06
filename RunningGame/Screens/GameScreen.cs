@@ -13,22 +13,41 @@ namespace RunningGame.Screens
 {
     public partial class GameScreen : UserControl
     {
+        Player player;
+        public static bool inAir = false;
+        public bool jumping = false;
+        public static int yAcceleration, yVelocity;
+
         public GameScreen()
         {
             InitializeComponent();
             OnStart();
         }
 
-        Player player;
-
         private void OnStart()
         {
-            player = new Player(100, 250, 0, 0);
+            player = new Player(100, 250);
+        }
+
+        private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    if (inAir == false && jumping == false)
+                    {
+                        jumping = true;
+                        yAcceleration = 10;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            player.jump();
+            player.airCheck();
             Refresh();
         }
 
