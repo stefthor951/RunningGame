@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RunningGame.Screens;
+using System.Drawing;
 
 namespace RunningGame.Classes
 {
     class Player
     {
-        public double x, y, initialY;
+        public int x, y, initialY;
         public int counter, width, height;
         int yChange, yVelocity, forwardSpeed = 5, reverseSpeed = 3;
+        int yAcceleration;
 
-        public Player(float _x, float _y, int _width, int _height)
+        public Player(int _x, int _y, int _width, int _height)
         {
             x = _x;
             y = _y;
@@ -23,16 +25,18 @@ namespace RunningGame.Classes
 
         public void airCheck()
         {
+            if (GameScreen.jumping == true && GameScreen.inAir == false)
+            {
+                yAcceleration = 10;
+                initialY = y;
+                GameScreen.inAir = true;
+            }
+
             if (GameScreen.inAir == true)
             {
-                if (counter == 0)
-                {
-                    initialY = y;
-                }
-                y = initialY - yChange;
-                yChange += GameScreen.yAcceleration;
+                yChange += yAcceleration;
                 //yVelocity += GameScreen.yAcceleration;
-                GameScreen.yAcceleration--;
+                yAcceleration--;
 
                 if (y > 400 - height && counter > 0)
                 {
@@ -42,16 +46,31 @@ namespace RunningGame.Classes
                 }
                 counter++;
             }
-            else
+
+            else if (GameScreen.inAir == false)
             {
-                GameScreen.yAcceleration = 0;
+                yAcceleration = 0;
                 counter = 0;
                 yChange = 0;
             }
         }
-        public int PlatformCollision(Platform p)
+
+        public bool PlatformCollision(Platform p, bool onPlatform)
         {
-            if (y > )
+            Rectangle playerRec = new Rectangle(x, y, width, height);
+            Rectangle platformRec = new Rectangle(p.x, p.y, p.xSize, p.ySize);
+
+            if (playerRec.IntersectsWith(platformRec))
+            {
+                if (y < p.y && x > p.x && (x + width < p.x + p.ySize)) //if the player is above the platform and between its left and right x coordinate
+                {
+                    GameScreen.inAir = false;
+                    y = p.y - height;
+                    onPlatform = true;
+                    return (onPlatform);
+                }
+            }
+            return ((false));
         }
         public void Move(string direction)
         {

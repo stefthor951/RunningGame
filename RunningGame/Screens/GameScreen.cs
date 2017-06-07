@@ -14,9 +14,10 @@ namespace RunningGame.Screens
     public partial class GameScreen : UserControl
     {
         Player player;
+        Platform platform1;
         public static bool inAir = false;
         public static bool jumping = false;
-        public static int yAcceleration, yVelocity;
+        public static int yVelocity;
 
         public GameScreen()
         {
@@ -27,6 +28,7 @@ namespace RunningGame.Screens
         private void OnStart()
         {
             player = new Player(100, 250, 50, 50);
+            platform1 = new Platform(75, 299, 0, 125, 50);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -38,7 +40,6 @@ namespace RunningGame.Screens
                     {
                         jumping = true;
                         inAir = true;
-                        yAcceleration = 10;
                     }
                     break;
                 default:
@@ -49,6 +50,7 @@ namespace RunningGame.Screens
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             player.airCheck();
+            player.PlatformCollision(platform1, );
             Refresh();
         }
 
