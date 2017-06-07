@@ -15,7 +15,7 @@ namespace RunningGame.Screens
     {
         Player player;
         public static bool inAir = false;
-        public bool jumping = false;
+        public static bool jumping = false;
         public static int yAcceleration, yVelocity;
 
         public GameScreen()
@@ -26,7 +26,7 @@ namespace RunningGame.Screens
 
         private void OnStart()
         {
-            player = new Player(100, 250);
+            player = new Player(100, 250, 50, 50);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -37,6 +37,7 @@ namespace RunningGame.Screens
                     if (inAir == false && jumping == false)
                     {
                         jumping = true;
+                        inAir = true;
                         yAcceleration = 10;
                     }
                     break;
