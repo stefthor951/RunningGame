@@ -14,9 +14,10 @@ namespace RunningGame.Screens
     public partial class GameScreen : UserControl
     {
         Player player;
-        Platform platform1;
+        List<Platform> platformList = new List<Platform>();
+
         public static bool inAir = false;
-        public static bool jumping = false;
+        public static bool jumping = true;
         public static int yVelocity;
 
         public GameScreen()
@@ -28,18 +29,27 @@ namespace RunningGame.Screens
         private void OnStart()
         {
             player = new Player(100, 250, 50, 50);
-            platform1 = new Platform(75, 299, 0, 125, 50);
+            Platform platform1 = new Platform(75, 260, 0, 125, 50);
+            platformList.Add(platform1);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
             {
+                case Keys.Escape:
+                    MenuScreen ms = new MenuScreen();
+                    Form form = this.FindForm();
+
+                    form.Controls.Add(ms);
+                    form.Controls.Remove(this);
+
+                    ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
+                    break;
                 case Keys.Space:
-                    if (inAir == false && jumping == false)
+                    if (inAir == false)// && jumping == false)
                     {
                         jumping = true;
-                        inAir = true;
                     }
                     break;
                 default:
@@ -50,14 +60,22 @@ namespace RunningGame.Screens
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             player.airCheck();
-            player.PlatformCollision(platform1, );
+            foreach (Platform p in platformList)
+            {
+                 player.PlatformCollision(p);
+            }
             Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             SolidBrush brush = new SolidBrush(Color.White);
+            SolidBrush blackBrush = new SolidBrush(Color.Black);
             e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), 50, 50);
+            foreach (Platform p in platformList)
+            {
+                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
+            }
         }
     }
 }
