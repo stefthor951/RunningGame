@@ -16,5 +16,28 @@ namespace RunningGame.Screens
         {
             InitializeComponent();
         }
+
+        private void HighscoreScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            MenuScreen ms = new MenuScreen();
+            Form form = this.FindForm();
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+
+                    form.Controls.Add(ms);
+                    form.Controls.Remove(this);
+
+                    ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
+                    break;
+                case Keys.Escape:
+
+                    form.Controls.Add(ms);
+                    form.Controls.Remove(this);
+
+                    ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
+                    break;
+            }
+        }
     }
 }

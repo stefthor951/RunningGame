@@ -12,9 +12,8 @@ namespace RunningGame.Classes
     {
         public int x, y, initialY;
         public int counter, width, height;
-        bool onPlatform;
-        int yChange, yVelocity, forwardSpeed = 5, reverseSpeed = 3, moveSpeed;
-        int yAcceleration;
+        bool onPlatform, ableToMove;
+        int yChange, forwardSpeed = 5, reverseSpeed = 3, yAcceleration;
 
         public Player(int _x, int _y, int _width, int _height)
         {
@@ -24,30 +23,34 @@ namespace RunningGame.Classes
             height = _height;
         }
 
+        public void jump()
+        {
+                
+        }
+
         public void airCheck()
         {
             if (GameScreen.jumping == true && GameScreen.inAir == false)
             {
-                yAcceleration = 10;
+                yAcceleration = 20;
                 initialY = y;
                 GameScreen.inAir = true;
                 GameScreen.jumping = false;
+                counter = 1;
             }
 
             else if (GameScreen.inAir == true)
             {
+                if (counter == 0)
+                {
+                    initialY = y;
+                }
+
                 onPlatform = false;
                 yChange += yAcceleration;
                 y = initialY - yChange;
-                //yVelocity += GameScreen.yAcceleration;
                 yAcceleration--;
 
-                //if (y > 400 - height && counter > 0)
-                //{
-                //    y = 400 - height;
-                //    GameScreen.inAir = false;
-                //    GameScreen.jumping = false;
-                //}
                 counter++;
             }
 
@@ -59,6 +62,7 @@ namespace RunningGame.Classes
                 counter = 0;
                 yChange = 0;
             }
+
         }
 
         public void PlatformCollision(Platform p)
@@ -68,26 +72,30 @@ namespace RunningGame.Classes
 
             if (playerRec.IntersectsWith(platformRec))
             {
-                if (y < p.y && x > p.x && (x + width < p.x + p.xSize)) //if the player is above the platform and between its left and right x coordinate
+                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize)) //if the player is above the platform and between its left and right x coordinate
                 {
                     GameScreen.inAir = false;
                     y = p.y - height - 1;
                     yAcceleration = 0;
                     onPlatform = true;
+                    
                 }
-                if (y > p.y && x > p.x && (x + width < p.x + p.ySize)) //if the player hits the bottom of a platform
+                else if (y > p.y && x > p.x && (x + width < p.x + p.ySize)) //if the player hits the bottom of a platform
                 {
                     yAcceleration = 0;
+                    onPlatform = false;
                 }
                 else if ((x + width) < p.x)
                 {
+                    yAcceleration = 0;
                     x = p.x - width;
-                    moveSpeed = 0;
+                    ableToMove = false;
+                    onPlatform = false;
 
                 }
             }
         }
-        public void Move(string direction)
+        public void Move(string direction, int screenWidth)
         {
             if (direction == "left")
             {
@@ -97,6 +105,20 @@ namespace RunningGame.Classes
             {
                 x += forwardSpeed;
             }
+            if (x < 0) //if the player is too far to the left
+            {
+                x += reverseSpeed;
+            }
+            if (x > screenWidth - width) //if the player is too far to the left
+            {
+                x -= forwardSpeed;
+            }
+        }
+
+        public void Clear()
+        {
+            yChange = forwardSpeed = reverseSpeed = yAcceleration = initialY = counter = 0;
+            GameScreen.inAir = GameScreen.jumping = false;
         }
     }
 }
