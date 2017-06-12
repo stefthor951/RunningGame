@@ -34,8 +34,7 @@
             // 
             // gameTimer
             // 
-            this.gameTimer.Enabled = true;
-            this.gameTimer.Interval = 8;
+            this.gameTimer.Interval = 16;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // GameScreen

@@ -18,9 +18,9 @@ namespace RunningGame.Screens
         List<Platform> platformList = new List<Platform>();
 
         public static bool inAir = false;
-        public static bool jumping = true;
         public static int yVelocity;
-        bool leftArrowDown, rightArrowDown;
+        bool leftArrowDown, rightArrowDown, spaceDown;
+        string currentDirection = null;
 
         public GameScreen()
         {
@@ -34,6 +34,7 @@ namespace RunningGame.Screens
             Platform platform1 = new Platform(75, 260, 0, 125, 50);
             platformList.Add(platform1);
             Thread.Sleep(500);
+            gameTimer.Enabled = true;
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -41,16 +42,16 @@ namespace RunningGame.Screens
             switch (e.KeyCode)
             {
                 case Keys.A:
-                    leftArrowDown = true;
+                    currentDirection = "left";
                     break;
                 case Keys.D:
-                    rightArrowDown = true;
+                    currentDirection = "right";
                     break;
                 case Keys.Left:
-                    leftArrowDown = true;
+                    currentDirection = "left";
                     break;
                 case Keys.Right:
-                    rightArrowDown = true;
+                    currentDirection = "right";
                     break;
                 case Keys.Escape:
                     MenuScreen ms = new MenuScreen();
@@ -60,13 +61,10 @@ namespace RunningGame.Screens
                     form.Controls.Remove(this);
 
                     ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
-                    player.Clear();
+                    //player.Clear();
                     break;
                 case Keys.Space:
-                    if (inAir == false)// && jumping == false)
-                    {
-                        jumping = true;
-                    }
+                    spaceDown = true;
                     break;
                 default:
                     break;
@@ -78,16 +76,19 @@ namespace RunningGame.Screens
             switch (e.KeyCode)
             {
                 case Keys.A:
-                    leftArrowDown = false;
+                    currentDirection = null;
                     break;
                 case Keys.D:
-                    rightArrowDown = false;
+                    currentDirection = null;
                     break;
                 case Keys.Left:
-                    leftArrowDown = false;
+                    currentDirection = null;
                     break;
                 case Keys.Right:
-                    rightArrowDown = false;
+                    currentDirection = null;
+                    break;
+                case Keys.Space:
+                    spaceDown = false;
                     break;
                 default:
                     break;
@@ -97,18 +98,11 @@ namespace RunningGame.Screens
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             #region player movement
-            player.airCheck();
-            if (leftArrowDown || rightArrowDown)
+            if (spaceDown == true && inAir == false)
             {
-                if (leftArrowDown)
-                {
-                    player.Move("left", this.Width);
-                }
-                else
-                {
-                    player.Move("right", this.Width);
-                }
+                    player.jump();
             }
+            player.Move(currentDirection, this.Width);            
             #endregion
 
             foreach (Platform p in platformList)
