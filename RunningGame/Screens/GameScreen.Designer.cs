@@ -41,6 +41,7 @@
             // 
             // playerPicture
             // 
+            this.playerPicture.BackColor = System.Drawing.Color.Transparent;
             this.playerPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.playerPicture.InitialImage = null;
             this.playerPicture.Location = new System.Drawing.Point(51, 211);

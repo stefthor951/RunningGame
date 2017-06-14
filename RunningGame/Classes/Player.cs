@@ -30,44 +30,6 @@ namespace RunningGame.Classes
             yAcceleration = 15;
         }
 
-        //this code is trash delete later
-        //public void airCheck()
-        //{
-        //    if (GameScreen.jumping == true && GameScreen.inAir == false)
-        //    {
-        //        yAcceleration = 20;
-        //        initialY = y;
-        //        GameScreen.inAir = true;
-        //        GameScreen.jumping = false;
-        //        counter = 1;
-        //    }
-
-        //    else if (GameScreen.inAir == true)
-        //    {
-        //        if (counter == 0)
-        //        {
-        //            initialY = y;
-        //        }
-
-        //        onPlatform = false;
-        //        yChange += yAcceleration;
-        //        y = initialY - yChange;
-        //        yAcceleration--;
-
-        //        counter++;
-        //    }
-
-        //    else if (onPlatform == true)
-        //    {
-        //        GameScreen.jumping = false;
-        //        GameScreen.inAir = false;
-        //        yAcceleration = 0;
-        //        counter = 0;
-        //        yChange = 0;
-        //    }
-
-        //}
-
         public void PlatformCollision(Platform p)
         {
             Rectangle playerRec = new Rectangle(x, y, width + 1, height + 1); //the plus ones are so that the player touching but not intersecting with a platform will still run the following code
@@ -75,7 +37,7 @@ namespace RunningGame.Classes
 
             if (playerRec.IntersectsWith(platformRec))
             {
-                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration < 0) //if the player is above the platform and between its left and right x coordinate and if the player is descending
+                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration <= 0) //if the player is above the platform and between its left and right x coordinate and if the player is descending
                 {
                     GameScreen.inAir = false;
                     y = p.y - height;

@@ -14,17 +14,21 @@ namespace RunningGame.Screens
 {
     public partial class GameScreen : UserControl
     {
+
         Player player;
-        List<Platform> platformList = new List<Platform>();
         List<Image> runList = new List<Image>();
         List<Image> jumpList = new List<Image>();
         List<Image> landList = new List<Image>();
+        int runCounter = 0, jumpCounter = 0, landCounter = 0;
+        bool jumping = false, landing = false;
+        public static bool inAir = true;
+
+        List<Platform> platformList = new List<Platform>();
+        int platformSpacing, spawnSpacing = 150;
 
         Random randNum = new Random();
-        public static bool inAir = true;
-        bool jumping = false, landing = false;
         public static int yVelocity;
-        int runCounter = 0, jumpCounter = 0, landCounter = 0;
+        
         int tickCount = 0;
         bool leftArrowDown, rightArrowDown, spaceDown;
         string currentDirection = null;
@@ -37,13 +41,14 @@ namespace RunningGame.Screens
 
         private void OnStart()
         {
-            player = new Player(100, 250, playerPicture.Width, playerPicture.Height);
-            Platform platform1 = new Platform(0, 350, 0, 900, 50);
+            player = new Player(100, 150, playerPicture.Width, playerPicture.Height);
+            //Platform platform1 = new Platform(0, 250, 5, 900, 250);
+            Platform platform1 = new Platform("start", this.Height);
             platformList.Add(platform1);
             Thread.Sleep(500);
             gameTimer.Enabled = true;
 
-            //run images (I named them backwards :( )
+            //run images (I named them backwards ): )
             runList.Add(Properties.Resources.run8);
             runList.Add(Properties.Resources.run7);
             runList.Add(Properties.Resources.run6);
@@ -132,8 +137,6 @@ namespace RunningGame.Screens
         {
             #region player animation
             
-            
-            //playerPicture.X = player.x;
             tickCount++;
             if (inAir == false && jumping == false && landing == false)
             {
@@ -191,6 +194,8 @@ namespace RunningGame.Screens
             }
             player.width = playerPicture.Width;
             player.height = playerPicture.Height;
+            Point picturePoint = new Point(player.x, player.y);
+            playerPicture.Location = picturePoint;
             #endregion
             #region player movement
             if (spaceDown == true && inAir == false)
@@ -213,11 +218,31 @@ namespace RunningGame.Screens
             player.Move(currentDirection, this.Width);
             #endregion
             #region platform movement and collision
+            platformSpacing = this.Width - platformList[platformList.Count - 1].x + platformList[platformList.Count -1].xSize;
+            if (platformSpacing > spawnSpacing)
+            {
+                int num = randNum.Next(0, 3);
+                if (num == 0)
+                {
+                    Platform p = new Platform("high", this.Height);
+                    platformList.Add(p);
+                }
+                else if (num == 1)
+                {
+                    Platform p = new Platform("middle", this.Height);
+                    platformList.Add(p);
+                }
+                else if (num == 2)
+                {
+                    Platform p = new Platform("low", this.Height);
+                    platformList.Add(p);
+                }
+            }
             foreach (Platform p in platformList)
             {
                 player.PlatformCollision(p);
-                p.y -= p.speed;
-                if (p.y + p.xSize < 0)
+                p.x -= p.speed;
+                if (p.x + p.xSize < 0)
                 {
                     platformList.Remove(p);
                 }
@@ -230,7 +255,7 @@ namespace RunningGame.Screens
         {
             SolidBrush brush = new SolidBrush(Color.White);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
-            e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
+            //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
             foreach (Platform p in platformList)
             {
                 e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);

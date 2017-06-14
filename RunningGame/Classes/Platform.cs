@@ -9,14 +9,47 @@ namespace RunningGame.Classes
     class Platform
     {
         public int x, y, speed, xSize, ySize;
+        public string type;
 
-        public Platform(int _x, int _y, int _speed, int _xSize, int _ySize)
+        int platformWidth = 850;
+
+        //public Platform(int _x, int _y, int _speed, int _xSize, int _ySize)
+        //{
+        //    x = _x;
+        //    y = _y;
+        //    speed = _speed;
+        //    xSize = _xSize;
+        //    ySize = _ySize;
+        //}
+
+        public Platform(string _type, int screenHeight)
         {
-            x = _x;
-            y = _y;
-            speed = _speed;
-            xSize = _xSize;
-            ySize = _ySize;
+            type = _type;
+
+            x = 1000;
+            speed = 5;
+            xSize = platformWidth;
+            if (type == "start")
+            {
+                x = 0;
+                y = 250;
+                ySize = screenHeight - y;
+            }
+            if (type == "high")
+            {
+                y = 100;
+                ySize = screenHeight - y;
+            }
+            if (type == "middle")
+            {
+                y = 250;
+                ySize = screenHeight - y;
+            }
+            if (type == "low")
+            {
+                y = 350;
+                ySize = screenHeight - y;
+            }
         }
 
         public void Move()
@@ -24,6 +57,9 @@ namespace RunningGame.Classes
             x -= speed;
         }
 
+        public void newPlatform()
+        {
 
+        }
     }
 }
