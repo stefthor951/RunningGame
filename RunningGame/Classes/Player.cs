@@ -11,7 +11,7 @@ namespace RunningGame.Classes
     class Player
     {
         public int x, y, initialY;
-        public int counter, width, height;
+        public int width, height;
         int yChange, forwardSpeed = 5, reverseSpeed = 3, yAcceleration;
 
         public Player(int _x, int _y, int _width, int _height)
@@ -20,10 +20,12 @@ namespace RunningGame.Classes
             y = _y;
             width = _width;
             height = _height;
+            initialY = _y;
         }
 
         public void jump()
         {
+            GameScreen.inAir = true;
             initialY = y;
             yAcceleration = 15;
         }
@@ -68,12 +70,12 @@ namespace RunningGame.Classes
 
         public void PlatformCollision(Platform p)
         {
-            Rectangle playerRec = new Rectangle(x, y, width, height);
+            Rectangle playerRec = new Rectangle(x, y, width + 1, height + 1); //the plus ones are so that the player touching but not intersecting with a platform will still run the following code
             Rectangle platformRec = new Rectangle(p.x, p.y, p.xSize, p.ySize);
 
             if (playerRec.IntersectsWith(platformRec))
             {
-                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize)) //if the player is above the platform and between its left and right x coordinate
+                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration < 0) //if the player is above the platform and between its left and right x coordinate and if the player is descending
                 {
                     GameScreen.inAir = false;
                     y = p.y - height;
@@ -129,7 +131,7 @@ namespace RunningGame.Classes
 
         public void Clear()
         {
-            yChange = forwardSpeed = reverseSpeed = yAcceleration = initialY = counter = 0;
+            //yChange = forwardSpeed = reverseSpeed = yAcceleration = initialY = counter = 0;
             GameScreen.inAir = false;
         }
     }
