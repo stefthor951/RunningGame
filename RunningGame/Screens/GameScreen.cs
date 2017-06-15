@@ -19,16 +19,18 @@ namespace RunningGame.Screens
         List<Image> runList = new List<Image>();
         List<Image> jumpList = new List<Image>();
         List<Image> landList = new List<Image>();
-        int runCounter = 0, jumpCounter = 0, landCounter = 0;
-        bool jumping = false, landing = false;
+        List<Image> fallList = new List<Image>();
+        int runCounter = 0, jumpCounter = 0, landCounter = 0, fallCounter = 0;
+        bool jumping = false, landing = false, falling = false;
         public static bool inAir = true;
 
         List<Platform> platformList = new List<Platform>();
         int platformSpacing, spawnSpacing = 150;
+        string currentPlatformType;
 
         Random randNum = new Random();
         public static int yVelocity;
-        
+
         int tickCount = 0;
         bool leftArrowDown, rightArrowDown, spaceDown;
         string currentDirection = null;
@@ -41,9 +43,10 @@ namespace RunningGame.Screens
 
         private void OnStart()
         {
-            player = new Player(100, 150, playerPicture.Width, playerPicture.Height);
-            //Platform platform1 = new Platform(0, 250, 5, 900, 250);
-            Platform platform1 = new Platform("start", this.Height);
+            
+            Platform platform1 = new Platform(0, 150, 5, 900, 250);
+            player = new Player(240, platform1.y - playerPicture.Height, playerPicture.Width, playerPicture.Height);
+            //Platform platform1 = new Platform("start", this.Height);
             platformList.Add(platform1);
             Thread.Sleep(500);
             gameTimer.Enabled = true;
@@ -72,6 +75,12 @@ namespace RunningGame.Screens
             landList.Add(Properties.Resources.land1);
             landList.Add(Properties.Resources.land2);
             landList.Add(Properties.Resources.land3);
+
+            //fall images
+            fallList.Add(Properties.Resources.fall1);
+            fallList.Add(Properties.Resources.fall2);
+            fallList.Add(Properties.Resources.fall3);
+            fallList.Add(Properties.Resources.fall4);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -99,7 +108,6 @@ namespace RunningGame.Screens
                     form.Controls.Remove(this);
 
                     ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
-                    //player.Clear();
                     break;
                 case Keys.Space:
                     spaceDown = true;
@@ -136,14 +144,14 @@ namespace RunningGame.Screens
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             #region player animation
-            
+
             tickCount++;
-            if (inAir == false && jumping == false && landing == false)
+            if (inAir == false && jumping == false && landing == false && falling == false)
             {
                 playerPicture.Width = runList[runCounter].Width;
                 playerPicture.Height = runList[runCounter].Height;
                 playerPicture.BackgroundImage = runList[runCounter];
-                if (tickCount % 4 == 0 && tickCount != 0)
+                if (tickCount % 3 == 0 && tickCount != 0)
                 {
                     runCounter++;
                 }
@@ -168,10 +176,31 @@ namespace RunningGame.Screens
                 if (inAir == false)
                 {
                     jumpCounter++;
-                    runCounter = 2;
                     jumping = false;
                     landing = true;
                     jumpCounter = 0;
+                    tickCount = 0;
+                }
+            }
+            if (falling)
+            {
+                playerPicture.Width = fallList[jumpCounter].Width;
+                playerPicture.Height = fallList[fallCounter].Height;
+                playerPicture.BackgroundImage = fallList[fallCounter];
+                if (tickCount % 4 == 0 && fallCounter < 4)
+                {
+                    fallCounter++;
+                }
+                if (fallCounter == 4)
+                {
+                    fallCounter = 3;
+                }
+                if (inAir == false)
+                {
+                    fallCounter++;
+                    falling = false;
+                    landing = true;
+                    fallCounter = 0;
                     tickCount = 0;
                 }
             }
@@ -180,7 +209,7 @@ namespace RunningGame.Screens
                 playerPicture.Width = landList[landCounter].Width;
                 playerPicture.Height = landList[landCounter].Height;
                 playerPicture.BackgroundImage = landList[landCounter];
-                if (tickCount % 5 == 0 && tickCount != 0)
+                if (tickCount % 4 == 0 && tickCount != 0)
                 {
                     landCounter++;
                 }
@@ -192,16 +221,24 @@ namespace RunningGame.Screens
                     tickCount = 0;
                 }
             }
+
+            //these two lines align the player to the bottom right corner of the picture instead of top left, which makes collision smoother with different sized frames.
+            player.y += player.height - playerPicture.Height;
+            player.x += player.width - playerPicture.Width;
+
             player.width = playerPicture.Width;
             player.height = playerPicture.Height;
-            Point picturePoint = new Point(player.x, player.y);
-            playerPicture.Location = picturePoint;
             #endregion
+
             #region player movement
-            if (spaceDown == true && inAir == false)
+            if (spaceDown == true && inAir == false && landing == false)
             {
                 player.jump();
                 jumping = true;
+            }
+            if (inAir == true && jumping == false)
+            {
+                falling = true;
             }
             if (leftArrowDown && rightArrowDown == false)
             {
@@ -216,12 +253,69 @@ namespace RunningGame.Screens
                 currentDirection = null;
             }
             player.Move(currentDirection, this.Width);
+            Point picturePoint = new Point(player.x, player.y);
+            playerPicture.Location = picturePoint;
             #endregion
+
             #region platform movement and collision
-            platformSpacing = this.Width - platformList[platformList.Count - 1].x + platformList[platformList.Count -1].xSize;
+            platformSpacing = this.Width - (platformList[platformList.Count - 1].x + platformList[platformList.Count - 1].xSize);
             if (platformSpacing > spawnSpacing)
             {
-                int num = randNum.Next(0, 3);
+                CreatePlatform();
+            }
+            foreach (Platform p in platformList)
+            {
+                p.x -= p.speed;
+                if (p.x + p.xSize < 0)
+                {
+                    platformList.Remove(p);
+                    break;
+                }
+            }
+            foreach (Platform p in platformList)
+            {
+                bool onPlatform = player.PlatformCollision(p);
+                if (onPlatform == true)
+                {
+                    currentPlatformType = p.type;
+                    break;
+                }
+            }
+            #endregion
+            Refresh();
+        }
+
+        private void GameScreen_Paint(object sender, PaintEventArgs e)
+        {
+            SolidBrush brush = new SolidBrush(Color.White);
+            SolidBrush blackBrush = new SolidBrush(Color.Black);
+            //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
+            foreach (Platform p in platformList)
+            {
+                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
+            }
+        }
+
+        private void CreatePlatform()
+        {
+            int num;
+            if (currentPlatformType == "low")
+            {
+                num = randNum.Next(0, 2);
+                if (num == 0)
+                {
+                    Platform p = new Platform("middle", this.Height);
+                    platformList.Add(p);
+                }
+                else if (num == 2)
+                {
+                    Platform p = new Platform("low", this.Height);
+                    platformList.Add(p);
+                }
+            }
+            else
+            {
+                num = randNum.Next(0, 3);
                 if (num == 0)
                 {
                     Platform p = new Platform("high", this.Height);
@@ -237,28 +331,6 @@ namespace RunningGame.Screens
                     Platform p = new Platform("low", this.Height);
                     platformList.Add(p);
                 }
-            }
-            foreach (Platform p in platformList)
-            {
-                player.PlatformCollision(p);
-                p.x -= p.speed;
-                if (p.x + p.xSize < 0)
-                {
-                    platformList.Remove(p);
-                }
-            }
-            #endregion
-            Refresh();
-        }
-
-        private void GameScreen_Paint(object sender, PaintEventArgs e)
-        {
-            SolidBrush brush = new SolidBrush(Color.White);
-            SolidBrush blackBrush = new SolidBrush(Color.Black);
-            //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
-            foreach (Platform p in platformList)
-            {
-                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
             }
         }
     }

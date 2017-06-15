@@ -12,7 +12,7 @@ namespace RunningGame.Classes
     {
         public int x, y, initialY;
         public int width, height;
-        int yChange, forwardSpeed = 5, reverseSpeed = 3, yAcceleration;
+        int yChange, forwardSpeed = 5, reverseSpeed = 3, yAcceleration = 0;
 
         public Player(int _x, int _y, int _width, int _height)
         {
@@ -30,23 +30,27 @@ namespace RunningGame.Classes
             yAcceleration = 15;
         }
 
-        public void PlatformCollision(Platform p)
+        public bool PlatformCollision(Platform p)
         {
             Rectangle playerRec = new Rectangle(x, y, width + 1, height + 1); //the plus ones are so that the player touching but not intersecting with a platform will still run the following code
             Rectangle platformRec = new Rectangle(p.x, p.y, p.xSize, p.ySize);
 
             if (playerRec.IntersectsWith(platformRec))
             {
-                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration <= 0) //if the player is above the platform and between its left and right x coordinate and if the player is descending
+                //if the player is above the platform and between its left and right x coordinate and if the player is descending
+                if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration <= 0) 
                 {
                     GameScreen.inAir = false;
                     y = p.y - height;
+                    yAcceleration = 0;
+                    yChange = 0;
+                    return (true);
                 }
                 else if (y > p.y && x > p.x && (x + width < p.x + p.ySize)) //if the player hits the bottom of a platform
                 { 
                     yAcceleration = 0;
                 }
-                else if ((x + width) < p.x)
+                else if (x < p.x) //if the player hits the left side of the platform
                 {
                     x = p.x - width;
                 }
@@ -59,6 +63,7 @@ namespace RunningGame.Classes
             {
                 GameScreen.inAir = true;
             }
+            return (false);
         }
         public void Move(string direction, int screenWidth)
         {
@@ -84,11 +89,6 @@ namespace RunningGame.Classes
                 y = initialY - yChange;
                 yAcceleration--;
             }
-            else if (GameScreen.inAir == false)
-            {
-                yAcceleration = 0;
-            }
-
         }
 
         public void Clear()
