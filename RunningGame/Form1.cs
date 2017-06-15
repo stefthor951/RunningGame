@@ -13,6 +13,9 @@ namespace RunningGame
 {
     public partial class Form1 : Form
     {
+        public static List<Highscore> highscoreList = new List<Highscore>();
+        public static int currentScore;
+
         public Form1()
         {
             InitializeComponent();

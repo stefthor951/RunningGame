@@ -143,6 +143,48 @@ namespace RunningGame.Screens
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+
+            #region platform movement and collision
+            platformSpacing = this.Width - (platformList[platformList.Count - 1].x + platformList[platformList.Count - 1].xSize);
+            if (platformSpacing > spawnSpacing)
+            {
+                CreatePlatform();
+            }
+            foreach (Platform p in platformList)
+            {
+                p.x -= p.speed;
+                if (p.x + p.xSize < 0)
+                {
+                    platformList.Remove(p);
+                    break;
+                }
+            }
+            foreach (Platform p in platformList)
+            {
+                bool onPlatform = player.PlatformCollision(p);
+                if (onPlatform == true)
+                {
+                    currentPlatformType = p.type;
+                    break;
+                }
+            }
+            #endregion
+            Refresh();
+        }
+
+        private void GameScreen_Paint(object sender, PaintEventArgs e)
+        {
+            SolidBrush brush = new SolidBrush(Color.White);
+            SolidBrush blackBrush = new SolidBrush(Color.Black);
+            //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
+            foreach (Platform p in platformList)
+            {
+                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
+            }
+        }
+
+        private void PlayerMovement()
+        {
             #region player animation
 
             tickCount++;
@@ -255,45 +297,23 @@ namespace RunningGame.Screens
             player.Move(currentDirection, this.Width);
             Point picturePoint = new Point(player.x, player.y);
             playerPicture.Location = picturePoint;
-            #endregion
 
-            #region platform movement and collision
-            platformSpacing = this.Width - (platformList[platformList.Count - 1].x + platformList[platformList.Count - 1].xSize);
-            if (platformSpacing > spawnSpacing)
+            if (player.y > this.Height + 100)
             {
-                CreatePlatform();
-            }
-            foreach (Platform p in platformList)
-            {
-                p.x -= p.speed;
-                if (p.x + p.xSize < 0)
+                gameTimer.Stop();
+                Form form = this.FindForm();
+                Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
+                if (hs.checkHighscore(hs) == false)
                 {
-                    platformList.Remove(p);
-                    break;
+                    LoseScreen ls = new LoseScreen();
+                    ls.Location = new Point((form.Width - ls.Width) / 2, (form.Height - ls.Height) / 2);
+
+                    form.Controls.Add(ls);
+                    form.Controls.Remove(this);
                 }
-            }
-            foreach (Platform p in platformList)
-            {
-                bool onPlatform = player.PlatformCollision(p);
-                if (onPlatform == true)
-                {
-                    currentPlatformType = p.type;
-                    break;
-                }
+                
             }
             #endregion
-            Refresh();
-        }
-
-        private void GameScreen_Paint(object sender, PaintEventArgs e)
-        {
-            SolidBrush brush = new SolidBrush(Color.White);
-            SolidBrush blackBrush = new SolidBrush(Color.Black);
-            //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
-            foreach (Platform p in platformList)
-            {
-                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
-            }
         }
 
         private void CreatePlatform()
