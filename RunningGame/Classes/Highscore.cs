@@ -24,10 +24,12 @@ namespace RunningGame
             {
                 if (Convert.ToInt16(hs.score) > Convert.ToInt32(Form1.highscoreList[i].score))
                 {
-                    Form1.highscoreList.Insert(i, hs);
-
                     return (true);
                 }
+            }
+            if (Form1.highscoreList.Count < 10)
+            {
+                return (true);
             }
             return (false);
         }
@@ -35,7 +37,6 @@ namespace RunningGame
         public void save(Highscore hs)
         {
             bool scoreAdded = false;
-            //Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore)); //TODO when highscore screen is finished change null for nameLabel.text (or something like that)
 
             for (int i = 0; i < Convert.ToInt16(Form1.highscoreList.Count); i++)
             {

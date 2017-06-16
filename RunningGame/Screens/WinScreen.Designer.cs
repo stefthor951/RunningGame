@@ -30,45 +30,49 @@
         {
             this.menuLabel = new System.Windows.Forms.Label();
             this.restartLabel = new System.Windows.Forms.Label();
-            this.scoreLabel = new System.Windows.Forms.Label();
+            this.scoreOutput = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.nameText1 = new System.Windows.Forms.Label();
+            this.nameText2 = new System.Windows.Forms.Label();
+            this.nameText3 = new System.Windows.Forms.Label();
+            this.rightSword = new System.Windows.Forms.PictureBox();
+            this.leftSword = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.rightSword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leftSword)).BeginInit();
             this.SuspendLayout();
             // 
             // menuLabel
             // 
             this.menuLabel.AutoSize = true;
-            this.menuLabel.Font = new System.Drawing.Font("Arial", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuLabel.Font = new System.Drawing.Font("Segoe Print", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuLabel.ForeColor = System.Drawing.Color.Gold;
-            this.menuLabel.Location = new System.Drawing.Point(591, 321);
+            this.menuLabel.Location = new System.Drawing.Point(574, 316);
             this.menuLabel.Name = "menuLabel";
-            this.menuLabel.Size = new System.Drawing.Size(234, 44);
+            this.menuLabel.Size = new System.Drawing.Size(268, 65);
             this.menuLabel.TabIndex = 7;
             this.menuLabel.Text = "MAIN MENU";
             // 
             // restartLabel
             // 
             this.restartLabel.AutoSize = true;
-            this.restartLabel.Font = new System.Drawing.Font("Arial", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.restartLabel.Font = new System.Drawing.Font("Segoe Print", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.restartLabel.ForeColor = System.Drawing.Color.Gold;
-            this.restartLabel.Location = new System.Drawing.Point(176, 321);
+            this.restartLabel.Location = new System.Drawing.Point(159, 316);
             this.restartLabel.Name = "restartLabel";
-            this.restartLabel.Size = new System.Drawing.Size(194, 44);
+            this.restartLabel.Size = new System.Drawing.Size(210, 65);
             this.restartLabel.TabIndex = 6;
             this.restartLabel.Text = "RESTART";
             // 
-            // scoreLabel
+            // scoreOutput
             // 
-            this.scoreLabel.AutoSize = true;
-            this.scoreLabel.Font = new System.Drawing.Font("Franklin Gothic Medium", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scoreLabel.ForeColor = System.Drawing.Color.White;
-            this.scoreLabel.Location = new System.Drawing.Point(414, 269);
-            this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(172, 34);
-            this.scoreLabel.TabIndex = 5;
-            this.scoreLabel.Text = "Final Score: ";
+            this.scoreOutput.AutoSize = true;
+            this.scoreOutput.Font = new System.Drawing.Font("Franklin Gothic Medium", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scoreOutput.ForeColor = System.Drawing.Color.White;
+            this.scoreOutput.Location = new System.Drawing.Point(414, 269);
+            this.scoreOutput.Name = "scoreOutput";
+            this.scoreOutput.Size = new System.Drawing.Size(172, 34);
+            this.scoreOutput.TabIndex = 5;
+            this.scoreOutput.Text = "Final Score: ";
             // 
             // titleLabel
             // 
@@ -81,51 +85,82 @@
             this.titleLabel.TabIndex = 4;
             this.titleLabel.Text = "YOU GOT A HIGHSCORE!";
             // 
-            // label2
+            // nameText1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Georgia", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(336, 160);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 56);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "A";
+            this.nameText1.AutoSize = true;
+            this.nameText1.Font = new System.Drawing.Font("Segoe Script", 39.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText1.ForeColor = System.Drawing.Color.White;
+            this.nameText1.Location = new System.Drawing.Point(350, 135);
+            this.nameText1.Name = "nameText1";
+            this.nameText1.Size = new System.Drawing.Size(81, 87);
+            this.nameText1.TabIndex = 8;
+            this.nameText1.Text = "A";
             // 
-            // label3
+            // nameText2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(280, 160);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "label3";
+            this.nameText2.AutoSize = true;
+            this.nameText2.Font = new System.Drawing.Font("Segoe Script", 39.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText2.ForeColor = System.Drawing.Color.White;
+            this.nameText2.Location = new System.Drawing.Point(460, 135);
+            this.nameText2.Name = "nameText2";
+            this.nameText2.Size = new System.Drawing.Size(81, 87);
+            this.nameText2.TabIndex = 9;
+            this.nameText2.Text = "A";
             // 
-            // label1
+            // nameText3
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Coral;
-            this.label1.Location = new System.Drawing.Point(346, 144);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "label1";
+            this.nameText3.AutoSize = true;
+            this.nameText3.Font = new System.Drawing.Font("Segoe Script", 39.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText3.ForeColor = System.Drawing.Color.White;
+            this.nameText3.Location = new System.Drawing.Point(570, 135);
+            this.nameText3.Name = "nameText3";
+            this.nameText3.Size = new System.Drawing.Size(81, 87);
+            this.nameText3.TabIndex = 10;
+            this.nameText3.Text = "A";
+            // 
+            // rightSword
+            // 
+            this.rightSword.BackColor = System.Drawing.Color.Transparent;
+            this.rightSword.BackgroundImage = global::RunningGame.Properties.Resources.scimitarflip;
+            this.rightSword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.rightSword.Location = new System.Drawing.Point(249, 269);
+            this.rightSword.Name = "rightSword";
+            this.rightSword.Size = new System.Drawing.Size(51, 24);
+            this.rightSword.TabIndex = 12;
+            this.rightSword.TabStop = false;
+            // 
+            // leftSword
+            // 
+            this.leftSword.BackColor = System.Drawing.Color.Transparent;
+            this.leftSword.BackgroundImage = global::RunningGame.Properties.Resources.scimitar;
+            this.leftSword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.leftSword.Location = new System.Drawing.Point(102, 269);
+            this.leftSword.Name = "leftSword";
+            this.leftSword.Size = new System.Drawing.Size(51, 24);
+            this.leftSword.TabIndex = 11;
+            this.leftSword.TabStop = false;
             // 
             // WinScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.rightSword);
+            this.Controls.Add(this.leftSword);
+            this.Controls.Add(this.nameText3);
+            this.Controls.Add(this.nameText2);
+            this.Controls.Add(this.nameText1);
             this.Controls.Add(this.menuLabel);
             this.Controls.Add(this.restartLabel);
-            this.Controls.Add(this.scoreLabel);
+            this.Controls.Add(this.scoreOutput);
             this.Controls.Add(this.titleLabel);
             this.Name = "WinScreen";
             this.Size = new System.Drawing.Size(1000, 400);
             this.Load += new System.EventHandler(this.WinScreen_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.WinScreen_KeyUp);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.WinScreen_PreviewKeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.rightSword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leftSword)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,10 +170,12 @@
 
         private System.Windows.Forms.Label menuLabel;
         private System.Windows.Forms.Label restartLabel;
-        private System.Windows.Forms.Label scoreLabel;
+        private System.Windows.Forms.Label scoreOutput;
         private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label nameText1;
+        private System.Windows.Forms.Label nameText2;
+        private System.Windows.Forms.Label nameText3;
+        private System.Windows.Forms.PictureBox rightSword;
+        private System.Windows.Forms.PictureBox leftSword;
     }
 }

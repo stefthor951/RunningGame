@@ -26,11 +26,18 @@ namespace RunningGame.Classes
             initialY = _y;
         }
 
+        public void HalfJump()
+        {
+            GameScreen.inAir = true;
+            initialY = y;
+            yAcceleration = 8;
+        }
+
         public void jump()
         {
             GameScreen.inAir = true;
             initialY = y;
-            yAcceleration = 15;
+            yAcceleration = 16;
         }
 
         public bool PlatformCollision(Platform p)
@@ -89,7 +96,7 @@ namespace RunningGame.Classes
             }
             if (GameScreen.inAir == true)
             {
-                if (cameraPanning == false)
+                //if (initialY - yChange > 50)
                 {
                     y = initialY - yChange;
                 }
@@ -98,25 +105,29 @@ namespace RunningGame.Classes
             }
         }
 
-        public void CameraPan(Platform p)
-        {
-            if (p.counter == 0)
-            {
-                p.initialY = p.y;
-                cameraPanning = true;
-            }
-            p.counter++;
-            p.y = p.initialY + p.yChange;
-            p.yChange += yAcceleration;
+        //public void CameraPan(Platform p)
+        //{
+        //    if (p.counter == 0)
+        //    {
+        //        p.initialY = p.y;
+        //        cameraPanning = true;
+        //    }
+        //    p.counter++;
+        //    p.y = p.initialY + yChange;
+        //    //p.yChange += yAcceleration;
 
-            if (p.initialY >= p.y)
-            {
-                p.y = p.initialY;
-                p.counter = 0;
-                cameraPanning = false;
-            }
+        //    //if (p.initialY > p.y)
+        //    //{
+        //    //    p.y = p.initialY;
+        //    //    p.counter = 0;
+        //    //    cameraPanning = false;
+        //    //}
+        //    if (y >= initialY)
+        //    {
+        //        p.y = p.initialY;
+        //    }
             
-        }
+        //}
 
         //public void CameraPan(Platform p)
         //{

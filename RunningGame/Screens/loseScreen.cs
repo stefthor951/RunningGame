@@ -21,9 +21,9 @@ namespace RunningGame.Screens
             InitializeComponent();
             
 
-            Point leftSwordPoint = new Point(restartLabel.Location.X - leftSword.Width - 5, 329);
+            Point leftSwordPoint = new Point(restartLabel.Location.X - leftSword.Width - 5, 314);
             leftSword.Location = leftSwordPoint;
-            Point rightSwordPoint = new Point(restartLabel.Location.X + restartLabel.Width + 5, 329);
+            Point rightSwordPoint = new Point(restartLabel.Location.X + restartLabel.Width + 5, 314);
             rightSword.Location = rightSwordPoint;
         }
 
@@ -130,9 +130,9 @@ namespace RunningGame.Screens
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        Point leftSwordPoint = new Point(restartLabel.Location.X - leftSword.Width - 5, 329);
+                        Point leftSwordPoint = new Point(restartLabel.Location.X - leftSword.Width - 5, 314);
                         leftSword.Location = leftSwordPoint;
-                        Point rightSwordPoint = new Point(restartLabel.Location.X + restartLabel.Width + 5, 329);
+                        Point rightSwordPoint = new Point(restartLabel.Location.X + restartLabel.Width + 5, 314);
                         rightSword.Location = rightSwordPoint;
                     }
                     break;
@@ -140,9 +140,9 @@ namespace RunningGame.Screens
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        Point leftSwordPoint = new Point(menuLabel.Location.X - leftSword.Width - 5, 329);
+                        Point leftSwordPoint = new Point(menuLabel.Location.X - leftSword.Width - 5, 314);
                         leftSword.Location = leftSwordPoint;
-                        Point rightSwordPoint = new Point(menuLabel.Location.X + menuLabel.Width + 5, 329);
+                        Point rightSwordPoint = new Point(menuLabel.Location.X + menuLabel.Width + 5, 314);
                         rightSword.Location = rightSwordPoint;
                     }
                     break;

@@ -45,7 +45,7 @@
             // 
             this.startLabel.BackColor = System.Drawing.Color.Transparent;
             this.startLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startLabel.ForeColor = System.Drawing.Color.White;
+            this.startLabel.ForeColor = System.Drawing.Color.DarkGray;
             this.startLabel.Location = new System.Drawing.Point(78, 423);
             this.startLabel.Name = "startLabel";
             this.startLabel.Size = new System.Drawing.Size(126, 36);
@@ -56,7 +56,7 @@
             // 
             this.instructionLabel.BackColor = System.Drawing.Color.Transparent;
             this.instructionLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.instructionLabel.ForeColor = System.Drawing.Color.White;
+            this.instructionLabel.ForeColor = System.Drawing.Color.DarkGray;
             this.instructionLabel.Location = new System.Drawing.Point(260, 423);
             this.instructionLabel.Name = "instructionLabel";
             this.instructionLabel.Size = new System.Drawing.Size(209, 35);
@@ -67,7 +67,7 @@
             // 
             this.highscoreLabel.BackColor = System.Drawing.Color.Transparent;
             this.highscoreLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.highscoreLabel.ForeColor = System.Drawing.Color.White;
+            this.highscoreLabel.ForeColor = System.Drawing.Color.DarkGray;
             this.highscoreLabel.Location = new System.Drawing.Point(525, 423);
             this.highscoreLabel.Name = "highscoreLabel";
             this.highscoreLabel.Size = new System.Drawing.Size(249, 36);
@@ -78,7 +78,7 @@
             // 
             this.exitLabel.BackColor = System.Drawing.Color.Transparent;
             this.exitLabel.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitLabel.ForeColor = System.Drawing.Color.White;
+            this.exitLabel.ForeColor = System.Drawing.Color.DarkGray;
             this.exitLabel.Location = new System.Drawing.Point(830, 423);
             this.exitLabel.Name = "exitLabel";
             this.exitLabel.Size = new System.Drawing.Size(93, 35);
@@ -91,7 +91,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe Script", 48F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.label1.Location = new System.Drawing.Point(169, 50);
+            this.label1.Location = new System.Drawing.Point(200, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(601, 106);
             this.label1.TabIndex = 6;

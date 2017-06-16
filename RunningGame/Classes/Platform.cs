@@ -8,9 +8,9 @@ namespace RunningGame.Classes
 {
     class Platform
     {
-        public int x, y, speed, xSize, ySize, initialY, counter = 0, yChange = 0;
+        public int x, y, speed, xSize, ySize, initialY, counter = 0, yChange = 0, yAcceleration;
         public string type;
-
+        bool reverseJump = false;
         int platformWidth = 850;
 
         public Platform(int _x, int _y, int _speed, int _xSize, int _ySize)
@@ -55,8 +55,27 @@ namespace RunningGame.Classes
         public void Move()
         {
             x -= speed;
+
+            if (reverseJump)
+            {
+                y = initialY + yChange;
+                yChange += yAcceleration;
+                yAcceleration--;
+            }
+
+            if (y < initialY)
+            {
+                y = initialY;
+                yAcceleration = 0;
+                reverseJump = false;
+            }
         }
 
-        
+        public void ReverseJump()
+        {
+            reverseJump = true;
+            initialY = y;
+            yAcceleration = 8;
+        }
     }
 }

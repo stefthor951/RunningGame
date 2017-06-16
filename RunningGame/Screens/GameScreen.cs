@@ -45,7 +45,7 @@ namespace RunningGame.Screens
         private void OnStart()
         {
             Form1.currentScore = 0;
-            Platform platform1 = new Platform(0, 250, 5, 2000, 250);
+            Platform platform1 = new Platform(0, 150, 5, 2000, 250);
             player = new Player(240, platform1.y - playerPicture.Height, playerPicture.Width, playerPicture.Height);
             //Platform platform1 = new Platform("start", this.Height);
             platformList.Add(platform1);
@@ -144,15 +144,18 @@ namespace RunningGame.Screens
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            Form1.currentScore++;
-            scoreLabel.Text = "Score : " + Form1.currentScore + "m";
-            if (player.y < 50)
+            if (tickCount % 2 == 0)
             {
-                foreach (Platform p in platformList)
-                {
-                    player.CameraPan(p);
-                }
+                Form1.currentScore++;
+                scoreLabel.Text = "Score : " + Form1.currentScore + "m";
             }
+            //if (player.y < 50)
+            //{
+            //    foreach (Platform p in platformList)
+            //    {
+            //        player.CameraPan(p);
+            //    }
+            //}
             PlayerMovement();
             #region platform movement and collision
             platformSpacing = this.Width - (platformList[platformList.Count - 1].x + platformList[platformList.Count - 1].xSize);
@@ -162,7 +165,7 @@ namespace RunningGame.Screens
             }
             foreach (Platform p in platformList)
             {
-                p.x -= p.speed;
+                p.Move();
                 if (p.x + p.xSize < 0)
                 {
                     platformList.Remove(p);
@@ -190,11 +193,6 @@ namespace RunningGame.Screens
             {
                 e.Graphics.FillRectangle(brush, p.x, p.y, p.xSize, p.ySize);
             }
-        }
-
-        private void CameraPan()
-        {
-
         }
 
         private void PlayerMovement()
@@ -289,7 +287,18 @@ namespace RunningGame.Screens
             #region player movement
             if (spaceDown == true && inAir == false && landing == false)
             {
-                player.jump();
+                if (player.y > 200)
+                {
+                    player.jump();
+                }
+                else
+                {
+                    player.HalfJump();
+                    foreach (Platform p in platformList)
+                    {
+                        p.ReverseJump();
+                    }
+                }
                 jumping = true;
             }
             if (inAir == true && jumping == false)
@@ -319,7 +328,15 @@ namespace RunningGame.Screens
                 gameTimer.Stop();
                 Form form = this.FindForm();
                 Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
-                //if (hs.checkHighscore(hs) == false)
+                if (hs.checkHighscore(hs) == true)
+                {
+                    WinScreen ws = new WinScreen();
+                    ws.Location = new Point((form.Width - ws.Width) / 2, (form.Height - ws.Height) / 2);
+
+                    form.Controls.Add(ws);
+                    form.Controls.Remove(this);
+                }
+                else
                 {
                     LoseScreen ls = new LoseScreen();
                     ls.Location = new Point((form.Width - ls.Width) / 2, (form.Height - ls.Height) / 2);
@@ -327,7 +344,6 @@ namespace RunningGame.Screens
                     form.Controls.Add(ls);
                     form.Controls.Remove(this);
                 }
-                
             }
             #endregion
         }

@@ -15,6 +15,30 @@ namespace RunningGame.Screens
         public HighscoreScreen()
         {
             InitializeComponent();
+            OnLoad();
+        }
+
+        private void OnLoad()
+        {
+            //outputs highscores in format: (Position). NAME score 
+            for (int i = 0; i < Form1.highscoreList.Count; i++)
+            {
+                if (i < 5)
+                {
+                    top5Output.Text += (i + 1) + ".  " + Form1.highscoreList[i].name + " " + Form1.highscoreList[i].score + "\n";
+                }
+                else if (i >= 5 && i < 10)
+                {
+                    if ((i + 1) == 10)
+                    {
+                        next5Output.Text += (i + 1) + ". " + Form1.highscoreList[i].name + " " + Form1.highscoreList[i].score + "\n";
+                    }
+                    else
+                    {
+                        next5Output.Text += (i + 1) + ".  " + Form1.highscoreList[i].name + " " + Form1.highscoreList[i].score + "\n";
+                    }
+                }
+            }
         }
 
         private void HighscoreScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
