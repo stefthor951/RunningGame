@@ -15,19 +15,38 @@ namespace RunningGame.Screens
         int index = 0;
         bool leftKeyDown, rightKeyDown, choiceChanged = false;
         Graphics g;
+        List<Image> redFireList = new List<Image>();
+        List<Image> blackFireList = new List<Image>();
         Pen whitePen;
 
         public MenuScreen()
         {
-            InitializeComponent();
-            g = this.CreateGraphics();
-            whitePen = new Pen(Color.White, 5);
-            
+            InitializeComponent(); 
+
+            Point leftSwordPoint = new Point(startLabel.Location.X - leftSword.Width - 5, 429);
+            leftSword.Location = leftSwordPoint;
+            Point rightSwordPoint = new Point(startLabel.Location.X + startLabel.Width + 5, 429);
+            rightSword.Location = rightSwordPoint;
+
         }
 
         private void MenuScreen_Load(object sender, EventArgs e)
         {
-            //g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
+            //redFireList.Add(Properties.Resources.pot);
+            //redFireList.Add(Properties.Resources.redfire1);
+            //redFireList.Add(Properties.Resources.redfire2);
+            //redFireList.Add(Properties.Resources.redfire3);
+            //redFireList.Add(Properties.Resources.redfire4);
+            //redFireList.Add(Properties.Resources.redfire5);
+            //redFireList.Add(Properties.Resources.redfire6);
+
+            //blackFireList.Add(Properties.Resources.pot);
+            //blackFireList.Add(Properties.Resources.blackfire1);
+            //blackFireList.Add(Properties.Resources.blackfire2);
+            //blackFireList.Add(Properties.Resources.blackfire3);
+            //blackFireList.Add(Properties.Resources.blackfire4);
+            //blackFireList.Add(Properties.Resources.blackfire5);
+            //blackFireList.Add(Properties.Resources.blackfire6);
         }
 
         private void MenuScreen_KeyUp(object sender, KeyEventArgs e)
@@ -134,32 +153,40 @@ namespace RunningGame.Screens
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        g.Clear(Color.Maroon);
-                        g.DrawLine(whitePen, startLabel.Location.X, startLabel.Location.Y + startLabel.Size.Height, startLabel.Location.X + startLabel.Size.Width - 5, startLabel.Location.Y + startLabel.Size.Height);
+                        Point leftSwordPoint = new Point(startLabel.Location.X - leftSword.Width - 5, 429);
+                        leftSword.Location = leftSwordPoint;
+                        Point rightSwordPoint = new Point(startLabel.Location.X + startLabel.Width + 5, 429);
+                        rightSword.Location = rightSwordPoint;
                     }
                     break;
                 case 1:
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        g.Clear(Color.Maroon);
-                        g.DrawLine(whitePen, instructionLabel.Location.X, instructionLabel.Location.Y + instructionLabel.Size.Height, instructionLabel.Location.X + instructionLabel.Size.Width, instructionLabel.Location.Y + instructionLabel.Size.Height);
+                        Point leftSwordPoint = new Point(instructionLabel.Location.X - leftSword.Width - 5, 429);
+                        leftSword.Location = leftSwordPoint;
+                        Point rightSwordPoint = new Point(instructionLabel.Location.X + instructionLabel.Width + 5, 429);
+                        rightSword.Location = rightSwordPoint;
                     }
                     break;
                 case 2:
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        g.Clear(Color.Maroon);
-                        g.DrawLine(whitePen, highscoreLabel.Location.X, highscoreLabel.Location.Y + highscoreLabel.Size.Height, highscoreLabel.Location.X + highscoreLabel.Size.Width, highscoreLabel.Location.Y + highscoreLabel.Size.Height);
+                        Point leftSwordPoint = new Point(highscoreLabel.Location.X - leftSword.Width - 5, 429);
+                        leftSword.Location = leftSwordPoint;
+                        Point rightSwordPoint = new Point(highscoreLabel.Location.X + highscoreLabel.Width + 5, 429);
+                        rightSword.Location = rightSwordPoint;
                     }
                     break;
                 case 3:
                     if (choiceChanged == false)
                     {
                         choiceChanged = true;
-                        g.Clear(Color.Maroon);
-                        g.DrawLine(whitePen, exitLabel.Location.X, exitLabel.Location.Y + exitLabel.Size.Height, exitLabel.Location.X + exitLabel.Size.Width - 5, exitLabel.Location.Y + exitLabel.Size.Height);
+                        Point leftSwordPoint = new Point(exitLabel.Location.X - leftSword.Width - 5, 429);
+                        leftSword.Location = leftSwordPoint;
+                        Point rightSwordPoint = new Point(exitLabel.Location.X + exitLabel.Width + 5, 429);
+                        rightSword.Location = rightSwordPoint;
                     }
                     break;
             }

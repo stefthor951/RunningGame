@@ -78,7 +78,6 @@ namespace RunningGame
 
                 //Write sub-elements
                 writer.WriteElementString("name", hs.name);
-                writer.WriteElementString("level", hs.level);
                 writer.WriteElementString("score", hs.score);
 
                 // end the "highscore" element

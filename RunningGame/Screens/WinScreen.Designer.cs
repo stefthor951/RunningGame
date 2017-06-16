@@ -125,6 +125,7 @@
             this.Controls.Add(this.titleLabel);
             this.Name = "WinScreen";
             this.Size = new System.Drawing.Size(1000, 400);
+            this.Load += new System.EventHandler(this.WinScreen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

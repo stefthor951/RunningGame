@@ -31,6 +31,7 @@ namespace RunningGame.Screens
         Random randNum = new Random();
         public static int yVelocity;
 
+        double difficultyScaler = 1;
         int tickCount = 0;
         bool leftArrowDown, rightArrowDown, spaceDown;
         string currentDirection = null;
@@ -43,8 +44,8 @@ namespace RunningGame.Screens
 
         private void OnStart()
         {
-            
-            Platform platform1 = new Platform(0, 150, 5, 900, 250);
+            Form1.currentScore = 0;
+            Platform platform1 = new Platform(0, 250, 5, 2000, 250);
             player = new Player(240, platform1.y - playerPicture.Height, playerPicture.Width, playerPicture.Height);
             //Platform platform1 = new Platform("start", this.Height);
             platformList.Add(platform1);
@@ -143,7 +144,16 @@ namespace RunningGame.Screens
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
+            Form1.currentScore++;
+            scoreLabel.Text = "Score : " + Form1.currentScore + "m";
+            if (player.y < 50)
+            {
+                foreach (Platform p in platformList)
+                {
+                    player.CameraPan(p);
+                }
+            }
+            PlayerMovement();
             #region platform movement and collision
             platformSpacing = this.Width - (platformList[platformList.Count - 1].x + platformList[platformList.Count - 1].xSize);
             if (platformSpacing > spawnSpacing)
@@ -174,13 +184,17 @@ namespace RunningGame.Screens
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            SolidBrush brush = new SolidBrush(Color.White);
-            SolidBrush blackBrush = new SolidBrush(Color.Black);
+            SolidBrush brush = new SolidBrush(Color.SandyBrown);
             //e.Graphics.FillRectangle(brush, Convert.ToInt16(player.x), Convert.ToInt16(player.y), player.width, player.height);
             foreach (Platform p in platformList)
             {
-                e.Graphics.FillRectangle(blackBrush, p.x, p.y, p.xSize, p.ySize);
+                e.Graphics.FillRectangle(brush, p.x, p.y, p.xSize, p.ySize);
             }
+        }
+
+        private void CameraPan()
+        {
+
         }
 
         private void PlayerMovement()
@@ -295,15 +309,17 @@ namespace RunningGame.Screens
                 currentDirection = null;
             }
             player.Move(currentDirection, this.Width);
-            Point picturePoint = new Point(player.x, player.y);
+            Point picturePoint = new Point(player.x, player.y + 10); // y value is increased so that player looks like they are running on the ground, rather than hovering
             playerPicture.Location = picturePoint;
+            #endregion
 
+            #region player collision with bottom
             if (player.y > this.Height + 100)
             {
                 gameTimer.Stop();
                 Form form = this.FindForm();
                 Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
-                if (hs.checkHighscore(hs) == false)
+                //if (hs.checkHighscore(hs) == false)
                 {
                     LoseScreen ls = new LoseScreen();
                     ls.Location = new Point((form.Width - ls.Width) / 2, (form.Height - ls.Height) / 2);

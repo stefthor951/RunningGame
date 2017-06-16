@@ -8,7 +8,7 @@ namespace RunningGame.Classes
 {
     class Platform
     {
-        public int x, y, speed, xSize, ySize;
+        public int x, y, speed, xSize, ySize, initialY, counter = 0, yChange = 0;
         public string type;
 
         int platformWidth = 850;
@@ -56,5 +56,7 @@ namespace RunningGame.Classes
         {
             x -= speed;
         }
+
+        
     }
 }

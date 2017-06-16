@@ -12,7 +12,10 @@ namespace RunningGame.Classes
     {
         public int x, y, initialY;
         public int width, height;
-        int yChange, forwardSpeed = 5, reverseSpeed = 3, yAcceleration = 0;
+        int yChange, forwardSpeed = 5, reverseSpeed = 4, yAcceleration = 0, counter;
+        bool cameraPanning = false;
+
+        List<Platform> platformList = new List<Platform>();
 
         public Player(int _x, int _y, int _width, int _height)
         {
@@ -40,6 +43,7 @@ namespace RunningGame.Classes
                 //if the player is above the platform and between its left and right x coordinate and if the player is descending
                 if (y < p.y && x + (width / 2) > p.x && (x + (width / 2) < p.x + p.xSize) && yAcceleration <= 0) 
                 {
+                    cameraPanning = false;
                     GameScreen.inAir = false;
                     y = p.y - height;
                     yAcceleration = 0;
@@ -85,16 +89,49 @@ namespace RunningGame.Classes
             }
             if (GameScreen.inAir == true)
             {
+                if (cameraPanning == false)
+                {
+                    y = initialY - yChange;
+                }
                 yChange += yAcceleration;
-                y = initialY - yChange;
                 yAcceleration--;
             }
         }
 
-        public void Clear()
+        public void CameraPan(Platform p)
         {
-            //yChange = forwardSpeed = reverseSpeed = yAcceleration = initialY = counter = 0;
-            GameScreen.inAir = false;
+            if (p.counter == 0)
+            {
+                p.initialY = p.y;
+                cameraPanning = true;
+            }
+            p.counter++;
+            p.y = p.initialY + p.yChange;
+            p.yChange += yAcceleration;
+
+            if (p.initialY >= p.y)
+            {
+                p.y = p.initialY;
+                p.counter = 0;
+                cameraPanning = false;
+            }
+            
         }
+
+        //public void CameraPan(Platform p)
+        //{
+        //    cameraPanning = true;
+        //    //platformList.Add(p);
+        //    //if (cameraPanning == true)
+        //    {
+        //        p.y += yAcceleration;
+        //        if (yAcceleration < 0)
+        //        {
+        //            y = initialY - yChange;
+        //        }
+        //    }
+        //    //yAcceleration--;
+
+        //}
     }
 }

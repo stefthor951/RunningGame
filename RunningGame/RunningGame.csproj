@@ -203,6 +203,57 @@
   <ItemGroup>
     <None Include="Resources\fall4.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scimitar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scimitarflip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Agrabah_cropped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackfire6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redfire6.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

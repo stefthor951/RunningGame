@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace RunningGame
 {
@@ -26,7 +27,49 @@ namespace RunningGame
             MenuScreen ms = new MenuScreen();
             this.Controls.Add(ms);
 
+            //attempts to load all saved highscores
+            try
+            {
+                loadHighscores();
+            }
+
+            //if the file did not exist, create the file
+            catch
+            {
+                XmlTextWriter writer = new XmlTextWriter("highscoreDB.xml", null);
+
+                writer.WriteStartElement("highscoreList");
+                writer.WriteEndElement();
+
+                writer.Close();
+            }
+
             ms.Location = new Point((this.Width - ms.Width) / 2, (this.Height - ms.Height) / 2);
+        }
+
+        private void loadHighscores() //method for loading any saved highscores in the highscoreDB xml file
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load("highscoreDB.xml");
+
+            XmlNode parent;
+            parent = doc.DocumentElement;
+            foreach (XmlNode child in parent.ChildNodes)
+            {
+                Highscore hs = new Highscore(null, null);
+                foreach (XmlNode grandChild in child.ChildNodes)
+                {
+                    if (grandChild.Name == "name")
+                    {
+                        hs.name = grandChild.InnerText;
+                    }
+                    if (grandChild.Name == "score")
+                    {
+                        hs.score = grandChild.InnerText;
+                    }
+                }
+                highscoreList.Add(hs);
+            }
         }
     }
 }
